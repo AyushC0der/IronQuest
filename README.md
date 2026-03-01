@@ -1,0 +1,5 @@
+Iron Quest is a gamified fitness tracking web application that transforms real-world workouts into an RPG-style progression system. Instead of simply recording exercises and numbers, the app rewards users with XP, levels, and character stat growth based on their gym activity. The goal is to make fitness tracking more engaging by giving users a clear sense of progress and achievement.
+
+Users log workouts by entering exercises, weight, reps, and sets. The system calculates XP from each workout and updates the user’s level and core stats such as Strength, Endurance, and Aesthetics. When a user beats their previous personal record, the app triggers a “Boss Battle” reward, giving bonus XP and reinforcing motivation through game-like feedback.
+
+The project focuses on solving the common problem of gym motivation loss caused by slow or invisible progress. By turning workouts into a progression loop similar to video games, Iron Quest creates immediate rewards and visual feedback that encourage consistency and long-term engagement.
