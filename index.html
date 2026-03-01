@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iron Quest</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+  <nav>
+    <div class="brand">
+      <span class="brand-name">Iron Quest</span>
+      <span class="brand-tag">Forge Your Legend</span>
+    </div>
+    <div class="hero-tag" onclick="openNameModal()">
+      <span class="hero-tag-icon">⚔</span>
+      <span class="hero-tag-name" id="hero-name-display">Hero</span>
+      <span class="hero-tag-edit">✏</span>
+    </div>
+  </nav>
+
+  <div class="main-grid">
+    <!-- LEFT: PROFILE -->
+    <div class="left-col">
+      <!-- Character Card -->
+      <div class="card">
+        <div class="card-head">
+          <span class="card-title">Character</span>
+          <span style="font-size:0.7rem;color:var(--text-3)" id="total-xp-display">0 XP Total</span>
+        </div>
+        <div class="card-body">
+          <div class="level-block">
+            <div class="level-circle">
+              <span class="lv-lbl">LVL</span>
+              <span class="lv-num" id="lv-num">1</span>
+            </div>
+            <div class="level-details">
+              <div class="level-rank" id="lv-title">Iron Novice</div>
+              <div class="xp-track"><div class="xp-fill" id="xp-fill" style="width:0%"></div></div>
+              <div class="xp-lbl" id="xp-lbl">0 / 100 XP to next level</div>
+            </div>
+          </div>
+          <div class="stats">
+            <div class="stat-item s-str">
+              <div class="stat-top">
+                <div class="stat-name"><span class="stat-dot"></span> Strength</div>
+                <div class="stat-val" id="sv-str">0</div>
+              </div>
+              <div class="stat-bar"><div class="stat-bar-fill" id="sb-str" style="width:0%"></div></div>
+            </div>
+            <div class="stat-item s-end">
+              <div class="stat-top">
+                <div class="stat-name"><span class="stat-dot"></span> Endurance</div>
+                <div class="stat-val" id="sv-end">0</div>
+              </div>
+              <div class="stat-bar"><div class="stat-bar-fill" id="sb-end" style="width:0%"></div></div>
+            </div>
+            <div class="stat-item s-aes">
+              <div class="stat-top">
+                <div class="stat-name"><span class="stat-dot"></span> Aesthetics</div>
+                <div class="stat-val" id="sv-aes">0</div>
+              </div>
+              <div class="stat-bar"><div class="stat-bar-fill" id="sb-aes" style="width:0%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PR Board -->
+      <div class="card">
+        <div class="card-head">
+          <span class="card-title">Personal Records</span>
+          <span style="font-size:0.7rem;color:var(--accent3)" id="pr-count">0 records</span>
+        </div>
+        <div class="card-body" style="padding-top:14px">
+          <div class="pr-list" id="pr-list">
+            <div class="no-data">No records yet — start lifting.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: LOG + HISTORY -->
+    <div class="right-col">
+      <!-- Log Card -->
+      <div class="card">
+        <div class="card-head"><span class="card-title">Log Workout</span></div>
+        <div class="card-body">
+          <div class="log-form">
+            <!-- Exercise row -->
+            <div>
+              <div class="metric-label" style="margin-bottom:6px">Exercise</div>
+              <div class="exercise-row">
+                <div class="exercise-select-wrap">
+                  <select id="exercise-select">
+                    <option value="">— Select exercise —</option>
+                  </select>
+                </div>
+                <button class="btn-manage" onclick="openManageModal()">
+                  <span>⚙</span> Manage
+                </button>
+              </div>
+            </div>
+
+            <!-- Metrics -->
+            <div class="metrics-row">
+              <div class="metric-group">
+                <label class="metric-label" for="i-weight">Weight (kg)</label>
+                <input type="number" id="i-weight" placeholder="60" min="0" oninput="updatePreview()">
+              </div>
+              <div class="metric-group">
+                <label class="metric-label" for="i-reps">Reps</label>
+                <input type="number" id="i-reps" placeholder="8" min="1" oninput="updatePreview()">
+              </div>
+              <div class="metric-group">
+                <label class="metric-label" for="i-sets">Sets</label>
+                <input type="number" id="i-sets" placeholder="3" min="1" oninput="updatePreview()">
+              </div>
+            </div>
+
+            <!-- Volume preview -->
+            <div class="volume-preview" id="vol-preview">
+              <span class="vol-label">Total volume will earn</span>
+              <span class="vol-xp" id="vol-xp">0 XP</span>
+            </div>
+
+            <!-- Submit -->
+            <button class="log-btn" onclick="logWorkout()">Log Set & Earn XP</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- History -->
+      <div class="card">
+        <div class="card-head">
+          <span class="card-title">Battle Log</span>
+          <span style="font-size:0.7rem;color:var(--text-3)" id="log-count">0 entries</span>
+        </div>
+        <div class="log-list" id="log-list">
+          <div class="empty-log">Complete your first set to begin your legend.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MANAGE EXERCISES MODAL -->
+<div class="modal-bg" id="manage-modal" onclick="bgClose(event,'manage-modal')">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title">Manage Exercises</span>
+      <button class="modal-close" onclick="closeManageModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="add-ex-row">
+        <input type="text" id="new-ex-input" placeholder="e.g. Incline Bench Press" maxlength="40"
+          onkeydown="if(event.key==='Enter')addExercise()">
+        <button class="btn-add-ex" onclick="addExercise()">+ Add</button>
+      </div>
+      <div class="divider"></div>
+      <div class="ex-chips" id="ex-chips"></div>
+    </div>
+  </div>
+</div>
+
+<!-- NAME MODAL -->
+<div class="modal-bg" id="name-modal" onclick="bgClose(event,'name-modal')">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title">Name Your Hero</span>
+      <button class="modal-close" onclick="closeNameModal()">✕</button>
+    </div>
+    <div class="modal-body name-modal-inner" style="padding:20px">
+      <label class="name-label">Hero Name</label>
+      <input type="text" id="name-input" placeholder="Enter name..." maxlength="24"
+        onkeydown="if(event.key==='Enter')saveName();if(event.key==='Escape')closeNameModal()">
+      <div class="name-btns">
+        <button class="btn-cancel" onclick="closeNameModal()">Cancel</button>
+        <button class="btn-save" onclick="saveName()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOASTS -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- SPARKS -->
+<div class="sparks-layer" id="sparks-layer"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
